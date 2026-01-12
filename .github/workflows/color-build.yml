@@ -44,7 +44,7 @@ jobs:
         branch: ${{ github.ref }}
   
     - name: Create Octopu Deploy Release
-      uses: OctopusDeploy/create-release-action@v5
+      uses: OctopusDeploy/create-release-action@v4
       with:
         project: color
         release-number: ${{ env.PACKAGE_VERSION }}
