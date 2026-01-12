@@ -1,0 +1,35 @@
+name: Update color
+
+on:
+  schedule:
+    # run every 4 hours (on 13 min)
+    - cron: '13 0/3 1/1 * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Read last color used
+        run: |
+          all_colors=(blue green yellow purple red orange)
+          colors=()
+          # Get last color
+          last_color=$(cat color.txt)
+          echo "Last color was $last_color"
+          # removing last color used
+          for value in "${all_colors[@]}"
+          do
+            if [[ $value != ${last_color} ]]
+            then
+              colors+=("$value")
+            fi
+          done
+          echo "New color array is ${colors[*]}"
+          index=$((1 + $RANDOM % 4))
+          export COLOR=${colors[$index]}
+          echo "New index is $index"
+          echo "New color is $COLOR"
+          echo $COLOR > "color.txt"
