@@ -1,0 +1,44 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: extract color from commit message
+      run: |
+        COLOR=$(echo "${CF_COMMIT_MESSAGE}" | awk -F":" '{print $1}')
+        echo "COLOR=$COLOR" >> $GITHUB_ENV
+        
+    - uses: actions/checkout@v4
+    
+    - name: Build the Docker image
+      run: docker buildx build . --platform 'linux/amd64,linux/arm64' \
+          --build-arg COLOR=${{ env.COLOR }} \
+          --build-arg LATENCY=0 \
+          --build-arg ERROR_RATE=0 \
+          --file Dockerfile --tag aperturesci/rollouts-demo:$GITHUB_SHA
+
+    - name: Push build information to Octopus Deploy 🐙
+        uses: OctopusDeploy/push-build-information-action@v4
+        with:
+          # A multi-line list of package IDs for which to push build info
+          packages: |
+            docker.io/aperturesci/rollouts-demo
+          # The version of the package(s)
+          version: $GITHUB_SHA # Or use a dynamic variable like ${{ github.run_number }}
+          # Optional: Override the branch name if needed
+          branch: ${{ github.ref }}
+    
+        env:
+          # Recommended to use GitHub secrets for sensitive information
+          OCTOPUS_URL: ${{ secrets.OCTOPUS_SERVER_URL }}
+          OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
+          OCTOPUS_SPACE: 'Default' # Or specify a Space name/ID
