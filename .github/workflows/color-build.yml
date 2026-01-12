@@ -33,15 +33,19 @@ jobs:
           --tag aperturesci/rollouts-demo:${{ env.PACKAGE_VERSION }}
 
     - name: Push build information to Octopus Deploy
-        uses: OctopusDeploy/push-build-information-action@v4
-        with:
-          project: color
-          packages: |
-            docker.io/aperturesci/rollouts-demo
-          # The version of the package(s)
-          version: ${{ env.PACKAGE_VERSION }} 
-          # Optional: Override the branch name if needed
-          branch: ${{ github.ref }}
-    
-
-
+      uses: OctopusDeploy/push-build-information-action@v4
+      with:
+        project: color
+        packages: |
+          docker.io/aperturesci/rollouts-demo
+        # The version of the package(s)
+        version: ${{ env.PACKAGE_VERSION }} 
+        # Optional: Override the branch name if needed
+        branch: ${{ github.ref }}
+  
+    - name: Create Octopu Deploy Release
+      uses: OctopusDeploy/create-release-action@v5
+      with:
+        project: color
+        release-number: ${{ env.PACKAGE_VERSION }}
+        deploy-to: Development        
