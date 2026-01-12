@@ -4,7 +4,8 @@ on:
   schedule:
     # run every 4 hours (on 13 min)
     - cron: '13 0/3 1/1 * *'
-
+  workflow_dispatch:
+  
 jobs:
   build:
     runs-on: ubuntu-latest
