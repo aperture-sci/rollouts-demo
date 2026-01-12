@@ -5,7 +5,7 @@ on:
     # run every 4 hours (on 13 min)
     - cron: '13 0/3 1/1 * *'
   workflow_dispatch:
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,6 +31,15 @@ jobs:
           echo "New color array is ${colors[*]}"
           index=$((1 + $RANDOM % 4))
           export COLOR=${colors[$index]}
+          echo "COLOR=$COLOR" >> $GITHUB_ENV
           echo "New index is $index"
           echo "New color is $COLOR"
           echo $COLOR > "color.txt"
+
+      - name: Commit and push new color
+        run: |
+          git config --global user.email 'laurent.rochette@octopus.com'
+          git config --global user.name 'lrochette' 
+          git add color.txt
+          git commit -m "Updating color to ${{ env.COLOR }}" || echo "No changes to commit"
+          git push origin HEAD:master
