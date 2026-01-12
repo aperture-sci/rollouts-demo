@@ -5,15 +5,16 @@ on:
     branches: [ "master" ]
   workflow_dispatch:
     
-
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
+    env:
+      # Recommended to use GitHub secrets for sensitive information
+      OCTOPUS_URL: ${{ vars.OCTOPUS_SERVER_URL }}
+      OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
+      OCTOPUS_SPACE: 'aperture' # Or specify a Space name/ID
 
     steps:
-  
     - uses: actions/checkout@v4
 
     - name: extract color from commit message
@@ -29,22 +30,18 @@ jobs:
           --build-arg COLOR=${{ env.COLOR }} \
           --build-arg LATENCY=0 \
           --build-arg ERROR_RATE=0 \
-          --file Dockerfile --tag aperturesci/rollouts-demo:$GITHUB_SHA
+          --tag aperturesci/rollouts-demo:${{ env.PACKAGE_VERSION }}
 
-    - name: Push build information to Octopus Deploy 🐙
+    - name: Push build information to Octopus Deploy
         uses: OctopusDeploy/push-build-information-action@v4
         with:
-          # A multi-line list of package IDs for which to push build info
+          project: color
           packages: |
             docker.io/aperturesci/rollouts-demo
           # The version of the package(s)
-          version: $GITHUB_SHA # Or use a dynamic variable like ${{ github.run_number }}
+          version: ${{ env.PACKAGE_VERSION }} 
           # Optional: Override the branch name if needed
           branch: ${{ github.ref }}
     
-        env:
-          # Recommended to use GitHub secrets for sensitive information
-          OCTOPUS_URL: ${{ vars.OCTOPUS_SERVER_URL }}
-          OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
-          OCTOPUS_SPACE: 'aperture' # Or specify a Space name/ID
+
 
