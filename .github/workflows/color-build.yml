@@ -48,9 +48,18 @@ jobs:
           docker.io/aperturesci/rollouts-demo
         version: ${{ env.PACKAGE_VERSION }} 
   
-    - name: Create Octopu Deploy Release
+    - name: Create Octopus Deploy Release
       uses: OctopusDeploy/create-release-action@v4
       with:
-        project: color
-        release-number: ${{ env.PACKAGE_VERSION }}
-        deploy-to: Development        
+        project: 'color'
+        release_number: ${{ env.PACKAGE_VERSION }}
+        packages:
+          docker.io/aperturesci/rollouts-demo:${{ env.PACKAGE_VERSION }}
+
+    - name: Deploy the release
+      with: 
+        project: 'color'
+        release_number: ${{ env.PACKAGE_VERSION }}
+        environments: |
+          Development
+        
