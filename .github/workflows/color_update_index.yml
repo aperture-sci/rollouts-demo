@@ -2,7 +2,7 @@ name: Update color
 
 on:
   schedule:
-    # run every 4 hours (on 13 min)
+    # run every 3 hours (on 13 min)
     - cron: '13 0/3 1/1 * *'
   workflow_dispatch:
 
@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_LR_PAT }}
 
       - name: Read last color used
         run: |
