@@ -12,7 +12,7 @@ jobs:
       # Recommended to use GitHub secrets for sensitive information
       OCTOPUS_URL: ${{ vars.OCTOPUS_SERVER_URL }}
       OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
-      OCTOPUS_SPACE: 'aperture' # Or specify a Space name/ID
+      OCTOPUS_SPACE: "Aperture Science"
 
     steps:
     - uses: actions/checkout@v4
