@@ -57,6 +57,7 @@ jobs:
           docker.io/aperturesci/rollouts-demo:${{ env.PACKAGE_VERSION }}
 
     - name: Deploy the release
+      uses: OctopusDeploy/deploy-release-action@v4
       with: 
         project: 'color'
         release_number: ${{ env.PACKAGE_VERSION }}
