@@ -44,7 +44,6 @@ jobs:
     - name: Push build information to Octopus Deploy
       uses: OctopusDeploy/push-build-information-action@v4
       with:
-        project: color
         packages: |
           docker.io/aperturesci/rollouts-demo
         # The version of the package(s)
