@@ -39,7 +39,7 @@ jobs:
           --build-arg LATENCY=0 \
           --build-arg ERROR_RATE=0 \
           --tag aperturesci/rollouts-demo:${{ env.PACKAGE_VERSION }} \
-          .
+          --push .
 
     - name: Push build information to Octopus Deploy
       uses: OctopusDeploy/push-build-information-action@v4
