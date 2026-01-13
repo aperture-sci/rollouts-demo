@@ -2,7 +2,10 @@ name: Build color container
 
 on:
   push:
-    branches: [ "master" ]
+    branches: 
+      - master
+    paths:
+      - 'color.txt'
   workflow_dispatch:
     
 jobs:
