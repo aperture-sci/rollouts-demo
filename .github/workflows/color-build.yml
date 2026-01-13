@@ -46,10 +46,7 @@ jobs:
       with:
         packages: |
           docker.io/aperturesci/rollouts-demo
-        # The version of the package(s)
         version: ${{ env.PACKAGE_VERSION }} 
-        # Optional: Override the branch name if needed
-        branch: ${{ github.ref }}
   
     - name: Create Octopu Deploy Release
       uses: OctopusDeploy/create-release-action@v4
