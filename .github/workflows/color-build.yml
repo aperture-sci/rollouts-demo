@@ -15,7 +15,8 @@ jobs:
       # Recommended to use GitHub secrets for sensitive information
       OCTOPUS_URL: ${{ vars.OCTOPUS_SERVER_URL }}
       OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
-      OCTOPUS_SPACE: "Aperture Science"
+      OCTOPUS_SPACE: "WGU Corp"
+      OCTOPUS_PROJECT: "color"
 
     steps:
     - uses: actions/checkout@v4
@@ -54,14 +55,14 @@ jobs:
     - name: Create Octopus Deploy Release
       uses: OctopusDeploy/create-release-action@v4
       with:
-        project: 'color'
+        project: ${{ env.OCTOPUS_PROJECT }}
         release_number: ${{ env.PACKAGE_VERSION }}
         package_version: ${{ env.PACKAGE_VERSION }}
 
     - name: Deploy the release
       uses: OctopusDeploy/deploy-release-action@v4
       with: 
-        project: 'color'
+        project: ${{ env.OCTOPUS_PROJECT }}
         release_number: ${{ env.PACKAGE_VERSION }}
         environments: |
           Development
