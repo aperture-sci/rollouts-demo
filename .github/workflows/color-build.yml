@@ -49,7 +49,7 @@ jobs:
       uses: OctopusDeploy/push-build-information-action@v4
       with:
         packages: |
-          docker.io/aperturesci/rollouts-demo
+          aperturesci/rollouts-demo
         version: ${{ env.PACKAGE_VERSION }} 
   
     - name: Create Octopus Deploy Release
