@@ -2,7 +2,7 @@ name: Build color container
 
 on:
   push:
-    branches: 
+    branches:
       - master
     paths:
       - 'color.txt'
@@ -15,7 +15,7 @@ jobs:
       # Recommended to use GitHub secrets for sensitive information
       OCTOPUS_URL: ${{ vars.OCTOPUS_SERVER_URL }}
       OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
-      OCTOPUS_SPACE: "WGU Corp"
+      OCTOPUS_SPACE: "Aperture Science"
       OCTOPUS_PROJECT: "color"
 
     steps:
@@ -50,8 +50,8 @@ jobs:
       with:
         packages: |
           aperturesci/rollouts-demo
-        version: ${{ env.PACKAGE_VERSION }} 
-  
+        version: ${{ env.PACKAGE_VERSION }}
+
     - name: Create Octopus Deploy Release
       uses: OctopusDeploy/create-release-action@v4
       with:
@@ -61,9 +61,8 @@ jobs:
 
     - name: Deploy the release
       uses: OctopusDeploy/deploy-release-action@v4
-      with: 
+      with:
         project: ${{ env.OCTOPUS_PROJECT }}
         release_number: ${{ env.PACKAGE_VERSION }}
         environments: |
           Development
-        
