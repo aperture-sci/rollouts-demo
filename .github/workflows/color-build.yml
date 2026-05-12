@@ -61,13 +61,18 @@ jobs:
         release_number: ${{ env.PACKAGE_VERSION }}
         package_version: ${{ env.PACKAGE_VERSION }}
 
-    - name: Deploy the release
-      uses: OctopusDeploy/deploy-release-action@v4
-      with:
-        project: Color
-        release_number: ${{ env.PACKAGE_VERSION }}
-        environments: |
-          Development
+    #
+    # Lifecycle deploys automatically
+    #
+    # TODO: Change to tenated deployment
+
+    # - name: Deploy the release
+    #   uses: OctopusDeploy/deploy-release-action@v4
+    #   with:
+    #     project: Color
+    #     release_number: ${{ env.PACKAGE_VERSION }}
+    #     environments: |
+    #       Development
 
     #
     # OpenShift
@@ -79,10 +84,14 @@ jobs:
         release_number: ${{ env.PACKAGE_VERSION }}
         package_version: ${{ env.PACKAGE_VERSION }}
 
-    - name: Deploy the release
-      uses: OctopusDeploy/deploy-release-action@v4
-      with:
-        project: rhos
-        release_number: ${{ env.PACKAGE_VERSION }}
-        environments: |
-          Development
+    #
+    # Lifecycle deploys automatically
+    #
+
+    # - name: Deploy the release
+    #   uses: OctopusDeploy/deploy-release-action@v4
+    #   with:
+    #     project: rhos
+    #     release_number: ${{ env.PACKAGE_VERSION }}
+    #     environments: |
+    #       Development
