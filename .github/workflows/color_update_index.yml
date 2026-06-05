@@ -7,14 +7,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write 
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.GH_LR_PAT }}
 
@@ -44,7 +44,7 @@ jobs:
       - name: Commit and push new color
         run: |
           git config --global user.email 'laurent.rochette@octopus.com'
-          git config --global user.name 'lrochette' 
+          git config --global user.name 'lrochette'
           git add color.txt
           git commit -m "Updating color to ${{ env.COLOR }}" || echo "No changes to commit"
           git push origin HEAD:master
