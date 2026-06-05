@@ -60,7 +60,7 @@ jobs:
         project: Color
         release_number: ${{ env.PACKAGE_VERSION }}
         package_version: ${{ env.PACKAGE_VERSION }}
-
+        git_ref: ${{ github.ref }}
     #
     # Lifecycle deploys automatically
     #
